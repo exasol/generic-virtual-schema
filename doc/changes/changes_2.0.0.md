@@ -1,4 +1,4 @@
-# Generic Virtual Schema 2.0.0, released 2021-06-??
+# Generic Virtual Schema 2.0.0, released 2021-06-10
 
 Code name: Removed `SQL_DIALECT` property
 
@@ -7,9 +7,13 @@ Code name: Removed `SQL_DIALECT` property
 The SQL_DIALECT property used when executing a CREATE VIRTUAL SCHEMA from the Exasol database is obsolete from this
 version. Please, do not provide this property anymore.
 
+## Documentation
+
+* #5: Added a user guide.
+
 ## Refactoring
 
-* # 3: Updated generic dialect.
+* #3: Updated generic dialect.
 
 ## Dependency Updates
 
