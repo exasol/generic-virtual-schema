@@ -16,6 +16,7 @@ import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 import com.exasol.adapter.jdbc.RemoteMetadataReader;
 import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
+import com.exasol.errorreporting.ExaError;
 
 /**
  * This dialect can be used for data sources where a custom dialect implementation does not yet exists. It will obtain
@@ -60,8 +61,10 @@ public class GenericSqlDialect extends AbstractSqlDialect {
     public String applyQuote(final String identifier) {
         final String quoteString = this.remoteMetadataReader.getSchemaAdapterNotes().getIdentifierQuoteString();
         if (identifier.contains(quoteString)) {
-            throw new IllegalArgumentException("An identifier '" + identifier + "' contains illegal substring: '"
-                    + quoteString + "'. Please remove it to use the generic dialect.");
+            throw new IllegalArgumentException(ExaError.messageBuilder("E-VS-GEN-3") //
+                    .message("An identifier {{identifier}} contains illegal substring: {{quoteString}}. "
+                            + "Please remove it to use the generic dialect.", identifier, quoteString)
+                    .toString());
         }
         return quoteString + identifier + quoteString;
     }
@@ -101,10 +104,11 @@ public class GenericSqlDialect extends AbstractSqlDialect {
         try {
             return new GenericMetadataReader(this.connectionFactory.getConnection(), this.properties);
         } catch (final SQLException exception) {
-            throw new RemoteMetadataReaderException(
-                    "Unable to create remote metadata reader for the generic SQL dialect. Caused by: "
-                            + exception.getMessage(),
-                    exception);
+            throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VS-GEN-4")
+                    .message(
+                            "Unable to create remote metadata reader for the generic SQL dialect. Caused by: {{cause}}",
+                            exception.getMessage())
+                    .toString(), exception);
         }
     }
 
