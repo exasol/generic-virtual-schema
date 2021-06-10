@@ -5,6 +5,7 @@ import static com.exasol.adapter.dialects.IdentifierCaseHandling.*;
 import com.exasol.adapter.adapternotes.SchemaAdapterNotes;
 import com.exasol.adapter.dialects.BaseIdentifierConverter;
 import com.exasol.adapter.dialects.IdentifierCaseHandling;
+import com.exasol.errorreporting.ExaError;
 
 /**
  * The {@link GenericIdentifierConverter} tries to determine identifier handling semi-automatically.
@@ -35,8 +36,10 @@ public class GenericIdentifierConverter extends BaseIdentifierConverter {
             } else if (adapterNotes.storesMixedCaseIdentifiers()) {
                 return INTERPRET_CASE_SENSITIVE;
             } else {
-                throw new UnsupportedOperationException("Unexpected behavior for unquoted identifiers. Adapter notes:\n" //
-                        + adapterNotes.toString());
+                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VS-GEN-1") //
+                        .message("Unexpected behavior for unquoted identifiers. Adapter notes:\n {{adapterNotes}}",
+                                adapterNotes)
+                        .toString());
             }
         }
     }
@@ -53,8 +56,10 @@ public class GenericIdentifierConverter extends BaseIdentifierConverter {
             } else if (adapterNotes.storesMixedCaseQuotedIdentifiers()) {
                 return INTERPRET_CASE_SENSITIVE;
             } else {
-                throw new UnsupportedOperationException("Unexpected behavior for quote identifiers. Adapter notes:\n" //
-                        + adapterNotes.toString());
+                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VS-GEN-2") //
+                        .message("Unexpected behavior for quoted identifiers. Adapter notes:\n {{adapterNotes}}",
+                                adapterNotes)
+                        .toString());
             }
         }
     }

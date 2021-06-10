@@ -1,0 +1,5 @@
+error-tags:
+  VS-GEN:
+    packages:
+      - com.exasol.adapter.dialects.generic
+    highest-index: 1
