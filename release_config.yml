@@ -1,0 +1,13 @@
+community-tags:
+  - Virtual Schema
+  - Open Source
+  - GitHub
+community-project-name: Generic Virtual Schema
+community-project-description: |
+  The **Generic Virtual Schema** provides an abstraction layer that makes an external data source accessible from an Exasol database through regular SQL commands.
+  The contents of the external data source are mapped to virtual tables which look like and can be queried as any regular Exasol table.
+
+  Please, only use Generic Virtual Schema if a source you want to connect to is not on [the list of the supported dialects](https://docs.exasol.com/database_concepts/virtual_schema/supported_data_sources.htm).
+release-platforms:
+  - GitHub
+  - Community
