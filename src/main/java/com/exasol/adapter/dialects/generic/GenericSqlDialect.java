@@ -9,8 +9,13 @@ import java.util.Set;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.adapternotes.SchemaAdapterNotes;
 import com.exasol.adapter.capabilities.Capabilities;
-import com.exasol.adapter.dialects.*;
-import com.exasol.adapter.jdbc.*;
+import com.exasol.adapter.dialects.AbstractSqlDialect;
+import com.exasol.adapter.dialects.QueryRewriter;
+import com.exasol.adapter.dialects.rewriting.ImportIntoTemporaryTableQueryRewriter;
+import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
+import com.exasol.adapter.jdbc.ConnectionFactory;
+import com.exasol.adapter.jdbc.RemoteMetadataReader;
+import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
 
 /**
  * This dialect can be used for data sources where a custom dialect implementation does not yet exists. It will obtain
@@ -105,6 +110,6 @@ public class GenericSqlDialect extends AbstractSqlDialect {
 
     @Override
     protected QueryRewriter createQueryRewriter() {
-        return new ImportIntoQueryRewriter(this, this.remoteMetadataReader, this.connectionFactory);
+        return new ImportIntoTemporaryTableQueryRewriter(this, this.remoteMetadataReader, this.connectionFactory);
     }
 }

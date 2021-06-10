@@ -36,7 +36,6 @@ class GenericSqlDialectTest {
     void testValidateCatalogProperty() throws PropertyValidationException {
         final Map<String, String> rawProperties = Map.of( //
                 CATALOG_NAME_PROPERTY, "MY_CATALOG", //
-                SQL_DIALECT_PROPERTY, "GENERIC", //
                 CONNECTION_NAME_PROPERTY, "MY_CONN" //
         );
         assertDialectCreatedWithValidProperties(this.connectionFactoryMock, rawProperties);
@@ -54,7 +53,6 @@ class GenericSqlDialectTest {
     void testValidateSchemaProperty() throws PropertyValidationException {
         final Map<String, String> rawProperties = Map.of( //
                 SCHEMA_NAME_PROPERTY, "MY_SCHEMA", //
-                SQL_DIALECT_PROPERTY, "GENERIC", //
                 CONNECTION_NAME_PROPERTY, "MY_CONN" //
         );
         assertDialectCreatedWithValidProperties(this.connectionFactoryMock, rawProperties);
