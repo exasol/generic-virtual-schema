@@ -1,4 +1,4 @@
-# Generic Virtual Schema 2.0.0, released 2021-06-10
+# Generic Virtual Schema 2.0.0, released 2021-06-11
 
 Code name: Removed `SQL_DIALECT` property
 
