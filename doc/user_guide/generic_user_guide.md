@@ -26,6 +26,9 @@ You need to specify the following settings when adding the JDBC driver via EXAOp
 | Prefix    | Prefix to use in connections              |
 | Files     | Files that belongs to the JDBC driver     |
 
+For some JDBC drivers you might need to disable a security manager. 
+If you see an error message with some missing certificates when you are testing the connection, that is the case.
+
 ## Uploading the JDBC Driver to EXAOperation
 
 1. [Create a bucket in BucketFS](https://docs.exasol.com/administration/on-premise/bucketfs/create_new_bucket_in_bucketfs_service.htm)

@@ -32,11 +32,12 @@ To see all available Virtual Schema implementations, please head over to the [Vi
 
 ### Information for Users
 
+* [Generic Virtual Schema User Guide](doc/user_guide/generic_user_guide.md)
 * [Virtual Schemas User Guide][virtual-schemas-user-guide]
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
 
-Find all the documentation in the [Virtual Schemas project][vs-doc].
+Find more documentation in the [Virtual Schemas project][vs-doc].
 
 ## Information for Developers
 
