@@ -31,7 +31,7 @@ version. Please, do not provide this property anymore.
 ### Plugin Dependency Updates
 
 * Added `com.exasol:error-code-crawler-maven-plugin:0.4.0`
-* Updated `com.exasol:project-keeper-maven-plugin:0.4.2` to `0.10.0`
+* Updated `com.exasol:project-keeper-maven-plugin:0.4.2` to `0.7.2`
 * Added `io.github.zlika:reproducible-build-maven-plugin:0.13`
 * Updated `org.apache.maven.plugins:maven-clean-plugin:2.5` to `3.1.0`
 * Updated `org.apache.maven.plugins:maven-deploy-plugin:2.7` to `2.8.2`
