@@ -36,7 +36,7 @@ public class GenericIdentifierConverter extends BaseIdentifierConverter {
             } else if (adapterNotes.storesMixedCaseIdentifiers()) {
                 return INTERPRET_CASE_SENSITIVE;
             } else {
-                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VS-GEN-1") //
+                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VSGEN-1") //
                         .message("Unexpected behavior for unquoted identifiers. Adapter notes:\n {{adapterNotes}}",
                                 adapterNotes)
                         .toString());
@@ -56,7 +56,7 @@ public class GenericIdentifierConverter extends BaseIdentifierConverter {
             } else if (adapterNotes.storesMixedCaseQuotedIdentifiers()) {
                 return INTERPRET_CASE_SENSITIVE;
             } else {
-                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VS-GEN-2") //
+                throw new UnsupportedOperationException(ExaError.messageBuilder("E-VSGEN-2") //
                         .message("Unexpected behavior for quoted identifiers. Adapter notes:\n {{adapterNotes}}",
                                 adapterNotes)
                         .toString());

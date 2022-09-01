@@ -13,9 +13,7 @@ import com.exasol.adapter.dialects.AbstractSqlDialect;
 import com.exasol.adapter.dialects.QueryRewriter;
 import com.exasol.adapter.dialects.rewriting.ImportIntoTemporaryTableQueryRewriter;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
-import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.jdbc.RemoteMetadataReader;
-import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
+import com.exasol.adapter.jdbc.*;
 import com.exasol.errorreporting.ExaError;
 
 /**
@@ -61,7 +59,7 @@ public class GenericSqlDialect extends AbstractSqlDialect {
     public String applyQuote(final String identifier) {
         final String quoteString = this.remoteMetadataReader.getSchemaAdapterNotes().getIdentifierQuoteString();
         if (identifier.contains(quoteString)) {
-            throw new IllegalArgumentException(ExaError.messageBuilder("E-VS-GEN-3") //
+            throw new IllegalArgumentException(ExaError.messageBuilder("E-VSGEN-3") //
                     .message("An identifier {{identifier}} contains illegal substring: {{quoteString}}. "
                             + "Please remove it to use the generic dialect.", identifier, quoteString)
                     .toString());
@@ -104,7 +102,7 @@ public class GenericSqlDialect extends AbstractSqlDialect {
         try {
             return new GenericMetadataReader(this.connectionFactory.getConnection(), this.properties);
         } catch (final SQLException exception) {
-            throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VS-GEN-4")
+            throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VSGEN-4")
                     .message(
                             "Unable to create remote metadata reader for the generic SQL dialect. Caused by: {{cause}}",
                             exception.getMessage())
