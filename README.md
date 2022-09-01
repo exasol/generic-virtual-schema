@@ -16,7 +16,9 @@
 
 # Overview
 
-The **Generic Virtual Schema** provides an abstraction layer that makes an external data source accessible from an Exasol database through regular SQL commands. The contents of the external data source are mapped to virtual tables which look like and can be queried as any regular Exasol table.
+The **Generic Virtual Schema** provides an abstraction layer that makes an external JDBC data source accessible from an Exasol database through regular SQL commands. The contents of the external data source are mapped to virtual tables which look like and can be queried as any regular Exasol table.
+
+This Generic Virtual Schema is limited to JDBC but generic in this domain, i.e. without specific capabilities.
 
 It's important to notice that in order to set up a Virtual Schema for a specific data source system, the Virtual Schema implementation for that specific data source system (if any) should be used, and not the Generic Virtual Schema.
 

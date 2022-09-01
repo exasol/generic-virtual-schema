@@ -1,6 +1,7 @@
 # Generic SQL Dialect User Guide
 
-The dialect only works with sources that offer a JDBC driver
+The dialect only works with sources that offer a JDBC driver.
+
 Please, only use Generic Virtual Schema if a source you want to connect to is not on [the list of the supported dialects](https://docs.exasol.com/database_concepts/virtual_schema/supported_data_sources.htm).
 
 ## Registering the JDBC Driver in EXAOperation
@@ -26,7 +27,7 @@ You need to specify the following settings when adding the JDBC driver via EXAOp
 | Prefix    | Prefix to use in connections              |
 | Files     | Files that belongs to the JDBC driver     |
 
-For some JDBC drivers you might need to disable a security manager. 
+For some JDBC drivers you might need to disable a security manager.
 If you see an error message with some missing certificates when you are testing the connection, that is the case.
 
 ## Uploading the JDBC Driver to EXAOperation
@@ -49,7 +50,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.3-generic-2.0.1.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.5-generic-2.0.1.jar;
   %jar /buckets/<BFS service>/<bucket>/<source databse jdbc driver>.jar;
 /
 ```
@@ -71,7 +72,7 @@ Below you see how a Virtual Schema is created.
 
 ```sql
 CREATE VIRTUAL SCHEMA <virtual schema name>
-	USING ADAPTER.JDBC_ADAPTER 
+	USING ADAPTER.JDBC_ADAPTER
 	WITH
 	CATALOG_NAME = '<catalog name>'
 	CONNECTION_NAME = 'GENERIC_CONNECTION'
