@@ -1,8 +1,10 @@
 package com.exasol.adapter.dialects.generic;
 
 import static com.exasol.adapter.dialects.IdentifierCaseHandling.*;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.startsWith;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +51,20 @@ class GenericIdentifierConverterTest {
                 .storesUpperCaseIdentifiers(false) //
                 .storesMixedCaseIdentifiers(true);
         assertUnquotedIdentifierHandling(INTERPRET_CASE_SENSITIVE, adapterNotesBuilder);
+    }
+
+    @Test
+    void testUnknownCaseIdentifierStorage() {
+        final SchemaAdapterNotes adapterNotes = SchemaAdapterNotes.builder() //
+                .supportsMixedCaseIdentifiers(false) //
+                .storesLowerCaseIdentifiers(false) //
+                .storesUpperCaseIdentifiers(false) //
+                .storesMixedCaseIdentifiers(false) //
+                .supportsMixedCaseQuotedIdentifiers(true) //
+                .build();
+        final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                () -> new GenericIdentifierConverter(adapterNotes));
+        assertThat(exception.getMessage(), startsWith("E-VSGEN-1: Unexpected behavior for unquoted identifiers."));
     }
 
     @Test

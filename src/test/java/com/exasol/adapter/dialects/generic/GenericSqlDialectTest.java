@@ -1,8 +1,11 @@
 package com.exasol.adapter.dialects.generic;
 
 import static com.exasol.adapter.AdapterProperties.*;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.sql.*;
@@ -15,8 +18,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.exasol.adapter.AdapterProperties;
+import com.exasol.adapter.capabilities.Capabilities;
 import com.exasol.adapter.dialects.*;
 import com.exasol.adapter.jdbc.ConnectionFactory;
+import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
 
 @ExtendWith(MockitoExtension.class)
 class GenericSqlDialectTest {
@@ -26,9 +31,10 @@ class GenericSqlDialectTest {
     @BeforeEach
     void beforeEach(@Mock final DatabaseMetaData metadataMock, @Mock final Connection connectionMock)
             throws SQLException {
-        when(metadataMock.supportsMixedCaseIdentifiers()).thenReturn(true);
-        when(metadataMock.supportsMixedCaseQuotedIdentifiers()).thenReturn(true);
-        when(connectionMock.getMetaData()).thenReturn(metadataMock);
+        lenient().when(metadataMock.supportsMixedCaseIdentifiers()).thenReturn(true);
+        lenient().when(metadataMock.supportsMixedCaseQuotedIdentifiers()).thenReturn(true);
+        lenient().when(metadataMock.getIdentifierQuoteString()).thenReturn("'");
+        lenient().when(connectionMock.getMetaData()).thenReturn(metadataMock);
         when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
     }
 
@@ -38,15 +44,13 @@ class GenericSqlDialectTest {
                 CATALOG_NAME_PROPERTY, "MY_CATALOG", //
                 CONNECTION_NAME_PROPERTY, "MY_CONN" //
         );
-        assertDialectCreatedWithValidProperties(this.connectionFactoryMock, rawProperties);
+        assertDialectCreatedWithValidProperties(rawProperties);
     }
 
-    private void assertDialectCreatedWithValidProperties(final ConnectionFactory connectionFactoryMock,
-            final Map<String, String> rawProperties) throws PropertyValidationException {
-        final AdapterProperties adapterProperties = new AdapterProperties(rawProperties);
-        final SqlDialectFactory factory = new GenericSqlDialectFactory();
-        final SqlDialect sqlDialect = factory.createSqlDialect(connectionFactoryMock, adapterProperties);
-        sqlDialect.validateProperties();
+    private void assertDialectCreatedWithValidProperties(final Map<String, String> rawProperties)
+            throws PropertyValidationException {
+        final SqlDialect sqlDialect = createDialect(rawProperties);
+        assertDoesNotThrow(sqlDialect::validateProperties);
     }
 
     @Test
@@ -55,6 +59,71 @@ class GenericSqlDialectTest {
                 SCHEMA_NAME_PROPERTY, "MY_SCHEMA", //
                 CONNECTION_NAME_PROPERTY, "MY_CONN" //
         );
-        assertDialectCreatedWithValidProperties(this.connectionFactoryMock, rawProperties);
+        assertDialectCreatedWithValidProperties(rawProperties);
+    }
+
+    @Test
+    void testGetName() {
+        final SqlDialect dialect = createDialect(Map.of());
+        assertThat(dialect.getName(), equalTo("GENERIC"));
+    }
+
+    @Test
+    void testRequiresCatalogQualifiedTableNames() {
+        final SqlDialect dialect = createDialect(Map.of());
+        assertThat(dialect.requiresCatalogQualifiedTableNames(null), is(true));
+    }
+
+    @Test
+    void testRequiresSchemaQualifiedTableNames() {
+        final SqlDialect dialect = createDialect(Map.of());
+        assertThat(dialect.requiresSchemaQualifiedTableNames(null), is(true));
+    }
+
+    @Test
+    void testGetStringLiteral() {
+        final SqlDialect dialect = createDialect(Map.of());
+        assertThat(dialect.getStringLiteral("string"), equalTo("'string'"));
+    }
+
+    @Test
+    void testGetCapabilitiesReturnsNoCapabilities() {
+        final SqlDialect dialect = createDialect(Map.of());
+        final Capabilities capabilities = dialect.getCapabilities();
+        assertThat(capabilities.getAggregateFunctionCapabilities(), empty());
+        assertThat(capabilities.getLiteralCapabilities(), empty());
+        assertThat(capabilities.getMainCapabilities(), empty());
+        assertThat(capabilities.getPredicateCapabilities(), empty());
+        assertThat(capabilities.getScalarFunctionCapabilities(), empty());
+    }
+
+    @Test
+    void testApplyQuote() {
+        final SqlDialect dialect = createDialect(Map.of());
+        assertThat(dialect.applyQuote("identifier"), equalTo("'identifier'"));
+    }
+
+    @Test
+    void testApplyQuoteFailsWhenIdentifierContainsQuote() {
+        final SqlDialect dialect = createDialect(Map.of());
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> dialect.applyQuote("identi'fier"));
+        assertThat(exception.getMessage(), equalTo(
+                "E-VSGEN-3: An identifier 'identi'fier' contains illegal substring: '''. Please remove it to use the generic dialect."));
+    }
+
+    @Test
+    void testCreatingMetadataReaderFails() throws SQLException {
+        when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException("mock"));
+        final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
+                () -> createDialect(Map.of()));
+        assertThat(exception.getMessage(), equalTo(
+                "E-VSGEN-4: Unable to create remote metadata reader for the generic SQL dialect. Caused by: 'mock'"));
+    }
+
+    private SqlDialect createDialect(final Map<String, String> rawProperties) {
+        final AdapterProperties adapterProperties = new AdapterProperties(rawProperties);
+        final SqlDialectFactory factory = new GenericSqlDialectFactory();
+        return factory.createSqlDialect(connectionFactoryMock, adapterProperties);
     }
 }
