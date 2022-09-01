@@ -14,6 +14,10 @@ In this release we did some internal refactorings and upgraded dependencies.
 
 * #11: Fixed broken links checker
 
+## Documentation
+
+* #10: Clarified purpose of the generic virtual schema
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
