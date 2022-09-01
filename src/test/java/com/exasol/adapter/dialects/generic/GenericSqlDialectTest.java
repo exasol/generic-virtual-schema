@@ -115,8 +115,9 @@ class GenericSqlDialectTest {
     @Test
     void testCreatingMetadataReaderFails() throws SQLException {
         when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException("mock"));
+        final Map<String, String> properties = Map.of();
         final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
-                () -> createDialect(Map.of()));
+                () -> createDialect(properties));
         assertThat(exception.getMessage(), equalTo(
                 "E-VSGEN-4: Unable to create remote metadata reader for the generic SQL dialect. Caused by: 'mock'"));
     }
