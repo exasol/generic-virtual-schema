@@ -68,6 +68,20 @@ class GenericIdentifierConverterTest {
     }
 
     @Test
+    void testUnknownQuotedIdentifierHandling() {
+        final SchemaAdapterNotes adapterNotes = SchemaAdapterNotes.builder() //
+                .supportsMixedCaseIdentifiers(true) //
+                .supportsMixedCaseQuotedIdentifiers(false) //
+                .storesLowerCaseQuotedIdentifiers(false) //
+                .storesUpperCaseQuotedIdentifiers(false) //
+                .storesMixedCaseQuotedIdentifiers(false) //
+                .build();
+        final UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class,
+                () -> new GenericIdentifierConverter(adapterNotes));
+        assertThat(exception.getMessage(), startsWith("E-VSGEN-2: Unexpected behavior for quoted identifiers."));
+    }
+
+    @Test
     void testGetQuotedIdentifierHandlingUpperIfSupportsMixedCase() {
         final SchemaAdapterNotes.Builder adapterNotesBuilder = SchemaAdapterNotes.builder()
                 .supportsMixedCaseQuotedIdentifiers(true);
