@@ -1,6 +1,10 @@
+# Deprecation Warning
+
+**Attention: ** due to reduced user interest, we archived this repository.
+
 # Generic Virtual Schema
 
-[![Build Status](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml)
+<!-- [![Build Status](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
 
@@ -12,7 +16,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=code_smells)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=coverage)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=ncloc)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=ncloc)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema) deprecated -->
 
 # Overview
 
