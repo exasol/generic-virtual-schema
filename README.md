@@ -1,3 +1,7 @@
+# Deprecation Warning
+
+**Attention: ** due to reduced user interest, we archived this repository.
+
 # Generic Virtual Schema
 
 [![Build Status](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml)
