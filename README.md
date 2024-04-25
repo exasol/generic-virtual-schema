@@ -4,7 +4,7 @@
 
 # Generic Virtual Schema
 
-<!.. [![Build Status](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml)
+<!-- [![Build Status](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/generic-virtual-schema/actions/workflows/ci-build.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Ageneric-virtual-schema&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Ageneric-virtual-schema)
 
